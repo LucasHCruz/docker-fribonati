@@ -24,7 +24,7 @@ services:
     - PGUSER=postgres
     - PGHOST=postgres
     - PGDATABASE=postgres
-    - PGPASSWORD=1qaz@wSX
+    - PGPASSWORD=1qaz2wsx
     - PGPORT=5432
   worker:
     build:
