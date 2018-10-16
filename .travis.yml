@@ -3,31 +3,31 @@ services:
   - docker
 
 before_install:
-  - docker build -t lhmcdev/fribonati-docker-test -f ./client/Dockerfile.dev ./client
+  - docker build -t lhmcdev/test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run lhmcdev/fribonati-docker-test npm test -- --coverage
+  - docker run lhmcdev/test npm test -- --coverage
 
 after_success:
-  - docker build -t lhmcdev/fribonati-docker-multi-client ./client
-  - docker build -t lhmcdev/fribonati-docker-multi-nginx ./nginx
-  - docker build -t lhmcdev/fribonati-docker-multi-server ./server
-  - docker build -t lhmcdev/fribonati-docker-multi-worker ./worker
+  - docker build -t lhmcdev/multi-client ./client
+  - docker build -t lhmcdev/multi-nginx ./nginx
+  - docker build -t lhmcdev/multi-server ./server
+  - docker build -t lhmcdev/multi-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push lhmcdev/fribonati-docker-multi-client
-  - docker push lhmcdev/fribonati-docker-multi-nginx
-  - docker push lhmcdev/fribonati-docker-multi-server
-  - docker push lhmcdev/fribonati-docker-multi-worker
+  - docker push lhmcdev/multi-client
+  - docker push lhmcdev/multi-nginx
+  - docker push lhmcdev/multi-server
+  - docker push lhmcdev/multi-worker
 
-deploy:
-  provider: elasticbeanstalk
-  origin: us-east-2
-  app: fribonati-docker
-  env: FribonatiDocker-env
-  bucket_name: elasticbeanstalk-us-east-2-769664459540
-  bucket_path: docker-multi
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-      secure: $AWS_SECRET_KEY
+#deploy:
+#  provider: elasticbeanstalk
+# origin: us-east-2
+#  app: docker
+#  env: FribonatiDocker-env
+#  bucket_name: elasticbeanstalk-us-east-2-769664459540
+#  bucket_path: docker-multi
+#  on:
+#    branch: master
+#  access_key_id: $AWS_ACCESS_KEY
+#  secret_access_key:
+#      secure: $AWS_SECRET_KEY
