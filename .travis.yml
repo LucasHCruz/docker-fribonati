@@ -18,3 +18,16 @@ after_success:
   - docker push lhmcdev/fribonati-docker-multi-nginx
   - docker push lhmcdev/fribonati-docker-multi-server
   - docker push lhmcdev/fribonati-docker-multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  origin: us-east-2
+  app: fribonati-docker
+  env: FribonatiDocker-env
+  bucket_name: elasticbeanstalk-us-east-2-769664459540
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+      secure: $AWS_SECRET_KEY
